@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
+import About from './About'
 
 /**
- * 挂载组件 
- *  组件被创建然后插入DOM 当中
- * 生命周期方法
- *  01 constructor        设置组件的初始配置
- *  02 render             解析 JSX ，在界面上展示
- *  03 componentDidMount  组件挂载完成
- *    发送网络请求  
- *    添加定义时器
- *    添加事件监听
- *    获取DOM元素 
+ * 什么是更新组件  
+ *  01 当数据更新之后，组件就需要被重新渲染 
+ *  02 外部传入的 props 以及自身管理的状态
+ * 
+ * 常用的方法
+ *  shouldComponentUpdate(nextProps, nextState)     组件是否更新
+ *    默认返回的是 true 
+ *    如果此方法返回 false 那么后续的方法就不会再执行
+ *  render                                          解析JSX 渲染DOM 呈现界面
+ *  componentDidUpdate                              组件更新完成之后执行
  */
 
 class App extends Component {
@@ -22,7 +23,9 @@ class App extends Component {
     this.handler = this.handler.bind(this)
   }
   handler() {
-    console.log(this)
+    this.setState({
+      count: this.state.count + 1
+    })
   }
   render() {
     console.log('render执行了')
@@ -30,16 +33,21 @@ class App extends Component {
       <div>
         {this.state.count}
         <button onClick={this.handler}>点击</button>
+        <About />
       </div>
     )
   }
   componentDidMount() {
-    console.log('挂载完成了')
+    // console.log('挂载完成了')
     // setInterval(() => {
     //   this.setState({
     //     count: this.state.count + 1
     //   })
     // }, 1000)
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    // console.log('shouldComponentUpdate执行了')
+    return true
   }
 }
 
