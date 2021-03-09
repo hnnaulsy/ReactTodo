@@ -1,87 +1,45 @@
 import React, { Component } from 'react'
-import StudentTitle from './Components/StudentTitle'
-import AddStudent from './Components/AddStudent'
-import StudentList from './Components/StudentList'
+
+/**
+ * 挂载组件 
+ *  组件被创建然后插入DOM 当中
+ * 生命周期方法
+ *  01 constructor        设置组件的初始配置
+ *  02 render             解析 JSX ，在界面上展示
+ *  03 componentDidMount  组件挂载完成
+ *    发送网络请求  
+ *    添加定义时器
+ *    添加事件监听
+ *    获取DOM元素 
+ */
 
 class App extends Component {
-
-  // 定义状态用于管理学员信息
-  state = {
-    studentList: [
-      {
-        "number": "01",
-        "name": "zce",
-        "age": "40",
-        "sex": "男",
-        "college": "大前端",
-        "hobbies": [
-          "篮球",
-          "足球"
-        ]
-      },
-      {
-        "number": "02",
-        "name": "zoe",
-        "age": "30",
-        "sex": "女",
-        "college": "python",
-        "hobbies": [
-          "篮球",
-          "网球"
-        ]
-      },
-      {
-        "number": "03",
-        "name": "syy",
-        "age": "18",
-        "sex": "男",
-        "college": "大前端",
-        "hobbies": [
-          "篮球"
-        ]
-      }
-    ]
+  constructor() {
+    super()
+    this.state = {
+      count: 0
+    }
+    this.handler = this.handler.bind(this)
   }
-
-  // 定义一个方法用于处理 studentList 状态
-  addStudent = (student, callback) => {
-    this.setState({
-      studentList: [...this.state.studentList, student]
-    }, () => {
-      callback()
-      console.log(this.state.studentList)
-    })
+  handler() {
+    console.log(this)
   }
-
-  // 定义删除操作
-  removeStudent = (number) => {
-    // 核心：利用 number 找到 studentList 当中需要被删除的项，将它从原数据中拿出
-    // 最后再将处理后的数据重新 setState 给 state ，之后界面就会自动更新  
-
-    // 01 将原数据进行深拷贝
-    const studentList = JSON.parse(JSON.stringify(this.state.studentList))
-
-    // 02 从拷贝后的原数据中查找 number 所对应的项
-    const index = studentList.findIndex(student => student.number === number)
-
-    // 03 利用上述的 index 将目标项从数组中删除
-    studentList.splice(index, 1)
-
-    // 04 数据同步操作
-    this.setState({ studentList }, () => {
-      console.log(this.state.studentList)
-    })
-
-  }
-
   render() {
+    console.log('render执行了')
     return (
-      <div className={'container'}>
-        <StudentTitle />
-        <AddStudent addStudent={this.addStudent} />
-        <StudentList studentList={this.state.studentList} removeStudent={this.removeStudent} />
+      <div>
+        {this.state.count}
+        <button onClick={this.handler}>点击</button>
       </div>
     )
+  }
+  componentDidMount() {
+    console.log('挂载完成了')
+    // setInterval(() => {
+    //   this.setState({
+    //     count: this.state.count + 1
+    //   })
+    // }, 1000)
   }
 }
 
