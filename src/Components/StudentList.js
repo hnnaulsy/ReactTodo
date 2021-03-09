@@ -11,7 +11,6 @@ class StudentList extends Component {
               <th>姓名</th>
               <th>性别</th>
               <th>年龄</th>
-              <th>入学时间</th>
               <th>爱好</th>
               <th>所属学院</th>
               <th>操作</th>
@@ -23,14 +22,13 @@ class StudentList extends Component {
               <td>张三</td>
               <td>男</td>
               <td>20</td>
-              <td>2020-08-02</td>
               <td>
                 <span>足球</span>
               </td>
               <td>python</td>
               <td>
-                <a href="">删除</a>
-                <a href="">修改</a>
+                <a href="#">删除</a>
+                <a href="#">修改</a>
               </td>
             </tr>
           </tbody>

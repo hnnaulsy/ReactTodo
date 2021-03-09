@@ -33,6 +33,9 @@ class AddStudent extends Component {
     ]
   }
 
+  // origin = { ...this.state }
+  origin = JSON.parse(JSON.stringify(this.state))
+
   stateHandler(e) {
     // 获取我们当前输入的值，然后调用 setState 更新在具体的属性身上
     const value = e.target.value
@@ -51,14 +54,36 @@ class AddStudent extends Component {
     const hobbies = [...this.state.hobbies]
     hobbies[index].isChecked = isChecked
     this.setState({ hobbies }, () => {
-      console.log(this.state.hobbies)
+    })
+  }
+
+  submit = (ev) => {
+    ev.preventDefault()
+    /**
+     * 提交的时候需要将表单里的有用信息整合在一起
+     *  01 筛选出我们当前次选中的爱好
+     *  02 将上述处理好的数据与其它数据组合在一起
+     *  03 将当前的数据利用回调的方式传回给上层组件（）
+     *  04 提交操作完成之后我们再将之前的 state 数据再次设置回界面上
+     */
+    const hobbies = this.state.hobbies
+      .filter(hobby => hobby.isChecked)
+      .map(hobby => hobby.title)
+
+    const formValue = {
+      ...this.state,
+      hobbies
+    }
+
+    this.props.addList(formValue, () => {
+      this.setState(this.origin)
     })
   }
 
   render() {
     return (
       <div className="col-md-5">
-        <form>
+        <form onSubmit={this.submit}>
           <div className="form-group">
             <label>学号</label>
             <input name={'number'} value={this.state.number} onChange={this.stateHandler} type="number" className="form-control" placeholder="请输入学号" />
@@ -70,15 +95,15 @@ class AddStudent extends Component {
           <div className="form-group">
             <label>性别&nbsp;&nbsp;</label>
             <label className="checkbox-inline">
-              <input name="sex" onChange={this.stateHandler} defaultChecked={this.state.sex === '男'} type="radio" value="男" /> 男
+              <input name="sex" onChange={this.stateHandler} checked={this.state.sex === '男'} type="radio" value="男" /> 男
             </label>
             <label className="checkbox-inline">
-              <input name="sex" onChange={this.stateHandler} defaultChecked={this.state.sex === '女'} type="radio" value="女" /> 女
+              <input name="sex" onChange={this.stateHandler} checked={this.state.sex === '女'} type="radio" value="女" /> 女
             </label>
           </div>
           <div className="form-group">
             <label>年龄</label>
-            <input name={'age'} value={this.state.age} onChange={this.stateHandler} type="text" className="form-control" placeholder="请输入姓名" />
+            <input name={'age'} value={this.state.age} onChange={this.stateHandler} type="text" className="form-control" placeholder="请输入年龄" />
           </div>
           <div className="form-group">
             <label>爱好</label>
@@ -87,7 +112,7 @@ class AddStudent extends Component {
                 return (
                   <div className="checkbox" key={hobby.id}>
                     <label>
-                      <input type="checkbox" defaultChecked={hobby.isChecked} value={hobby.title} onChange={this.hobbyHandler.bind(this, index)} /> {hobby.title}
+                      <input type="checkbox" checked={hobby.isChecked} value={hobby.title} onChange={this.hobbyHandler.bind(this, index)} /> {hobby.title}
                     </label>
                   </div>
                 )
