@@ -1,7 +1,15 @@
 import React, { Component } from 'react'
 
 class StudentList extends Component {
+  rmStudent = (index, ev) => {
+    ev.preventDefault()
+    if (window.confirm('是否确定删除当前项')) {
+      this.props.removeStudent(index)
+    }
+  }
   render() {
+    const { studentList } = this.props
+    console.log(studentList, 2222)
     return (
       <div className="col-md-6 col-md-offset-1">
         <table className="table table-striped table-hover">
@@ -17,20 +25,30 @@ class StudentList extends Component {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>01</td>
-              <td>张三</td>
-              <td>男</td>
-              <td>20</td>
-              <td>
-                <span>足球</span>
-              </td>
-              <td>python</td>
-              <td>
-                <a href="#">删除</a>
-                <a href="#">修改</a>
-              </td>
-            </tr>
+            {
+              studentList.map(student => {
+                return (
+                  <tr key={student.number}>
+                    <td>{student.number}</td>
+                    <td>{student.name}</td>
+                    <td>{student.sex}</td>
+                    <td>{student.age}</td>
+                    <td>
+                      {student.hobbies.map((hobby, index) => {
+                        return (
+                          <span key={index}>{hobby}</span>
+                        )
+                      })}
+                    </td>
+                    <td>{student.college}</td>
+                    <td>
+                      <a href="#" onClick={(ev) => { this.rmStudent(`${student.number}`, ev) }}>删除</a>
+                      <a href="#">修改</a>
+                    </td>
+                  </tr>
+                )
+              })
+            }
           </tbody>
 
         </table>

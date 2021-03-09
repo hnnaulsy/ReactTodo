@@ -75,7 +75,7 @@ class AddStudent extends Component {
       hobbies
     }
 
-    this.props.addList(formValue, () => {
+    this.props.addStudent(formValue, () => {
       this.setState(this.origin)
     })
   }
