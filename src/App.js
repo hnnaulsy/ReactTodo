@@ -62,7 +62,7 @@ class App extends Component {
     const studentList = JSON.parse(JSON.stringify(this.state.studentList))
 
     // 02 从拷贝后的原数据中查找 number 所对应的项
-    const index = studentList.findIndex(student => student.number == number)
+    const index = studentList.findIndex(student => student.number === number)
 
     // 03 利用上述的 index 将目标项从数组中删除
     studentList.splice(index, 1)

@@ -9,7 +9,14 @@ class StudentList extends Component {
   }
   render() {
     const { studentList } = this.props
-    console.log(studentList, 2222)
+    // 定义变量存放年纪之和
+    let totalAge = 0
+    // 定义变量存放平均年龄
+    let averAge = 0
+    studentList.forEach(hobby => totalAge += Number(hobby.age))
+
+    // 计算平均值 
+    averAge = Math.floor(totalAge / studentList.length)
     return (
       <div className="col-md-6 col-md-offset-1">
         <table className="table table-striped table-hover">
@@ -42,8 +49,7 @@ class StudentList extends Component {
                     </td>
                     <td>{student.college}</td>
                     <td>
-                      <a href="#" onClick={(ev) => { this.rmStudent(`${student.number}`, ev) }}>删除</a>
-                      <a href="#">修改</a>
+                      <span onClick={(ev) => { this.rmStudent(`${student.number}`, ev) }}>删除</span>
                     </td>
                   </tr>
                 )
@@ -52,9 +58,9 @@ class StudentList extends Component {
           </tbody>
 
         </table>
-        <p className="text-center">无学生信息</p>
-        <p>总共有 50 个学生</p>
-        <p>学生的平均年龄是 25</p>
+        { studentList.length > 0 ? null : <p className="text-center">无学生信息</p>}
+        <p>总共有 {studentList.length} 个学生</p>
+        <p>学生的平均年龄是 {averAge}</p>
       </div>
     )
   }
