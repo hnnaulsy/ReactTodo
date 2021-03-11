@@ -1,13 +1,20 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
-function Counter() {
+function Counter(props) {
+  console.log(props)
   return (
     <div>
       <button>+1</button>
-      <span>0</span>
+      <span>{props.count}</span>
       <button>-1</button>
     </div>
   )
 }
 
-export default Counter
+
+const mapStateToProps = state => ({
+  count: state.count
+})
+
+export default connect(mapStateToProps)(Counter)

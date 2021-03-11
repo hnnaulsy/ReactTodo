@@ -1,6 +1,6 @@
 
 export default () => {
   return {
-    count: 0
+    count: 10
   }
 }
