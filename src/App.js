@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+
 /**
- * 01 什么是请求转发 
- * 02 react是如何实现请求转的
- *  a package.json 配置 proxy 
- *  b http-proxy-middleware 
+ * 01 axios 
+ * 02 请求转发
+ * 03 mock 数据
  */
 
 class App extends Component {
@@ -12,22 +12,33 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      msg: ''
+      articles: []
     }
+  }
+
+  getArticle = async () => {
+    let articles = await axios.get('/api/article.json').then(response => response.data)
+    this.setState({ articles }, () => {
+      console.log(this.state.articles)
+    })
   }
 
   render() {
     return (
       <div>
-        当前数据为：{this.state.msg}
+        <button onClick={this.getArticle}>获取文章列表</button>
+        <ul>
+          {
+            this.state.articles.map(article => (
+              <li key={article.id}>{article.title}</li>
+            ))
+          }
+        </ul>
       </div>
     )
   }
 
-  async componentDidMount() {
-    const data = await axios.get("/api/welcome").then(res => res.data)
-    this.setState(data)
-  }
+
 
 }
 
