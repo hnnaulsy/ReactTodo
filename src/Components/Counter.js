@@ -1,13 +1,13 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 
 function Counter(props) {
   console.log(props)
   return (
     <div>
-      <button>+1</button>
+      <button onClick={() => { props.dispatch({ type: 'increment' }) }}>+1</button>
       <span>{props.count}</span>
-      <button>-1</button>
+      <button onClick={() => { props.dispatch({ type: 'decrement' }) }}>-1</button>
     </div>
   )
 }

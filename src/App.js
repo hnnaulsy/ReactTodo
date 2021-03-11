@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import Counter from './Components/Counter'
 
 /**
- * redux react-redux 
  */
 
 class App extends Component {
@@ -14,9 +13,6 @@ class App extends Component {
       </div>
     )
   }
-
-
-
 }
 
 export default App
