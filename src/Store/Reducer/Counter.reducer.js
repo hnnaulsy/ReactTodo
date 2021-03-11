@@ -1,3 +1,4 @@
+import { INCREMENT, INCREMENT_N, DECREMENT } from '../Action_types/counter.actions.types'
 const initialState = {
   count: 6
 }
@@ -6,15 +7,15 @@ const initialState = {
 export default (state = initialState, action) => {
   console.log(action)
   switch (action.type) {
-    case 'increment':
+    case INCREMENT:
       return {
         count: state.count + 1
       }
-    case 'decrement':
+    case DECREMENT:
       return {
         count: state.count - 1
       }
-    case 'increment_n':
+    case INCREMENT_N:
       return {
         count: state.count + action.payload
       }

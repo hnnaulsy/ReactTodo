@@ -1,4 +1,5 @@
+import { INCREMENT, INCREMENT_N, DECREMENT } from '../Action_types/counter.actions.types'
 
-export const increment = () => ({ type: 'increment' })
-export const decrement = () => ({ type: 'decrement' })
-export const increment_n = (payload) => ({ type: 'increment_n', payload })
+export const increment = () => ({ type: INCREMENT })
+export const decrement = () => ({ type: DECREMENT })
+export const increment_n = (payload) => ({ type: INCREMENT_N, payload })
