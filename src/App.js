@@ -8,8 +8,9 @@ import * as personActions from './store/Actions/person.actions'
 class App extends Component {
 
   handler = () => {
-    this.props.getPersons()
+    this.props.load_person()
   }
+
   render() {
     console.log(this.props)
     return (
@@ -21,11 +22,9 @@ class App extends Component {
 }
 
 // 获取 store 中的数据
-const mapStateToProps = (state) => {
-  return {
-    person: state.personReducer.person
-  }
-}
+const mapStateToProps = (state) => ({
+  person: state.personReducer.person
+})
 
 // 自动生成触发 actions 的函数
 const mapActionsToProps = (dispatch) => {

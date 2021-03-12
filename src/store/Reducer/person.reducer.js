@@ -1,24 +1,13 @@
 const initialState = {
-  person: [
-    {
-      id: '001',
-      name: 'syy',
-      age: 20,
-      sex: '男'
-    }
-  ]
+  person: []
 }
 
 function reducer(state = initialState, action) {
   switch (action.type) {
-    case 'loadPersonSuccess':
+    case 'load_person_success':
       return {
-        person: [
-          ...state.person,
-          ...action.payLoad
-        ]
+        person: action.payLoad
       }
-
     default:
       return state
   }

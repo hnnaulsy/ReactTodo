@@ -4,9 +4,12 @@ import App from './App'
 import { createStore, applyMiddleware } from 'redux'
 import totalReducer from './store/Reducer'
 import { Provider } from 'react-redux'
-import thunk from 'redux-thunk'
+import createSagaMiddleware from 'redux-saga'
+import personSaga from './store/Saga/person.saga'
 
-const store = createStore(totalReducer, applyMiddleware(thunk))
+const sagaMiddleware = createSagaMiddleware()
+const store = createStore(totalReducer, applyMiddleware(sagaMiddleware))
+sagaMiddleware.run(personSaga)
 
 ReactDOM.render(
   <React.StrictMode>
