@@ -5,11 +5,11 @@ import { createStore, applyMiddleware } from 'redux'
 import totalReducer from './store/Reducer'
 import { Provider } from 'react-redux'
 import createSagaMiddleware from 'redux-saga'
-import personSaga from './store/Saga/person.saga'
+import rootSaga from './store/Saga/root.saga'
 
 const sagaMiddleware = createSagaMiddleware()
 const store = createStore(totalReducer, applyMiddleware(sagaMiddleware))
-sagaMiddleware.run(personSaga)
+sagaMiddleware.run(rootSaga)
 
 ReactDOM.render(
   <React.StrictMode>
