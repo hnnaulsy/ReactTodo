@@ -1,38 +1,33 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import * as personActions from './store/Actions/person.actions'
+import * as counterActions from './Stroe/Actions/counter.actions'
 /**
+ * redux-actions
  */
 
 class App extends Component {
-
-  handler = () => {
-    this.props.load_person()
-  }
-
   render() {
     console.log(this.props)
     return (
       <div>
-        <button onClick={this.handler}>获取数据</button>
+        <button onClick={this.props.decrement_action}>-1</button>
+        <span>{this.props.count}</span>
+        <button onClick={this.props.increment_action}>+1</button>
       </div>
     )
   }
 }
 
-// 获取 store 中的数据
+// 获取 store 当中的数据
 const mapStateToProps = (state) => ({
-  person: state.personReducer.person
+  count: state.counterReducer.count
 })
 
-// 自动生成触发 actions 的函数
-const mapActionsToProps = (dispatch) => {
-  return {
-    ...bindActionCreators(personActions, dispatch)
-  }
-}
+// 自动生成 action 的处理方法
+const mapActionToProps = (dispatch) => ({
+  ...bindActionCreators(counterActions, dispatch)
+})
 
-
-export default connect(mapStateToProps, mapActionsToProps)(App)
+export default connect(mapStateToProps, mapActionToProps)(App)
 
