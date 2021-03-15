@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { takeEvery, put } from 'redux-saga/effects'
-import { load_todo_success, load_todo, add_todo, add_todo_success } from '../actions/todo.actions'
+import { load_todo_success, load_todo, add_todo, add_todo_success, remove_todo, remove_todo_success } from '../actions/todo.actions'
 
 // 实现 load_todo_data 获取数据同时传递新指令
 function* load_todo_data() {
@@ -18,9 +18,22 @@ function* add_todo_data(action) {
   yield put(add_todo_success(taskInfo.task))
 }
 
+// 实现 remove_todo_data
+function* remove_todo_data(action) {
+  // 此时将 id 利用相应的接口传递给后端执行具体的删除操作   
+  let res = yield axios.delete('http://localhost:3005/api/todos', {
+    params: {
+      id: action.payload
+    }
+  }).then(res => res.data)
+  // 重新发送指令
+  yield put(remove_todo_success(res.tasks.id))
+}
+
 export default function* todoSaga() {
   yield takeEvery(load_todo, load_todo_data)
   yield takeEvery(add_todo, add_todo_data)
+  yield takeEvery(remove_todo, remove_todo_data)
 }
 
 /**

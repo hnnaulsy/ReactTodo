@@ -26,7 +26,6 @@ class Header extends Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <div className="header">
         <h1>todos</h1>

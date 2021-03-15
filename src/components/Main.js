@@ -10,7 +10,15 @@ class Main extends Component {
     this.props.load_todo()
   }
 
+  removeTask(id) {
+    if (window.confirm('确定删除当前任务')) {
+      // 触发删除操作的指令（ 异步 + 新指令 ）
+      this.props.remove_todo(id)
+    }
+  }
+
   render() {
+    console.log(this.props)
     return (
       <section className="main">
         <input className="toggle-all" type="checkbox" />
@@ -21,7 +29,7 @@ class Main extends Component {
                 <div className="view">
                   <input className="toggle" type="checkbox" />
                   <label>{item.taskName}</label>
-                  <button className="destroy"></button>
+                  <button className="destroy" onClick={this.removeTask.bind(this, item.id)}></button>
                 </div>
                 <input className="edit" />
               </li>
