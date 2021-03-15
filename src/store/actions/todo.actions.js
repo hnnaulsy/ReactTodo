@@ -12,6 +12,11 @@ export const add_todo_success = createAction('add_todo_success')
 export const remove_todo = createAction('remove_todo')
 export const remove_todo_success = createAction('remove_todo_success')
 
+// 04 更新指令
+export const modify_todo = createAction('modify_todo')
+export const modify_todo_success = createAction('modify_todo_success')
+
+
 /**
  *  01 可以发送请求获取数据    load_todo
  *  02 当异步操作完成之后还需要触发新的指令  load_todo_success
