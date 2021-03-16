@@ -1,6 +1,6 @@
 import { handleActions as createReducer } from 'redux-actions'
 import { modify_todo_name_success, modify_todo_edit_success, clear_todo_completed_success, load_todo_success, add_todo_success, remove_todo_success, modify_todo_success, modify_todo_filter } from '../actions/todo.actions'
-import { fromJS, setIn } from 'immutable'
+import { fromJS, setIn, mergeDeep, removeIn, getIn, updateIn } from 'immutable'
 
 const initialState = fromJS({
   todos: [],
@@ -16,45 +16,34 @@ const load_todo_action = (state, action) => {
 }
 
 // 2 添加任务
-const add_todo_action = (state, action) => ({ ...state, todos: [...state.todos, action.payload] })
+const add_todo_action = (state, action) => {
+  // mergeDeep 合并数据
+  // 第二个参数，是要合并的属性及被合并的值 
+  return mergeDeep(state, { todos: [action.payload] })
+}
 
 // 3 删除任务
 const remove_todo_action = (state, action) => {
-  // 需要获取被删除项的 id  
-  let id = action.payload
-  let index = state.todos.findIndex(todo => todo.id === id)
-  let todos = JSON.parse(JSON.stringify(state.todos))
-  todos.splice(index, 1)
-  return { ...state, todos }
+  let index = getIn(state, ['todos']).findIndex(todo => todo.id === action.payload)
+  return removeIn(state, ['todos', index])
 }
 // 4 切换任务状态
 const modify_todo_action = (state, action) => {
-  let params = action.payload
-
-  let index = state.todos.findIndex(todo => todo.id === params.id)
-
-  let todos = JSON.parse(JSON.stringify(state.todos))
-
-  todos[index].isCompleted = params.isCompleted
-  return { ...state, todos }
+  let index = getIn(state, ['todos']).findIndex(todo => todo.id === action.payload.id)
+  // 第二个参数是要更新的属性
+  // 第三个参数是我们要更新成的目标值
+  return updateIn(state, ['todos', index], () => action.payload)
 }
 
 // 5 过滤不同状态任务
 const filter_todo_action = (state, action) => {
-  return {
-    ...state,
-    filter: action.payload
-  }
+  return setIn(state, ['filter'], action.payload)
 }
 
 // 6 清除已完成
 const clear_completed_action = (state, action) => {
-  let todos = JSON.parse(JSON.stringify(state.todos))
-  todos = todos.filter(todo => !todo.isCompleted)
-  return {
-    ...state,
-    todos
-  }
+  let todos = getIn(state, ['todos']).filter(todo => !todo.isCompleted)
+  return setIn(state, ['todos'], todos)
 }
 
 // 07 编辑任务

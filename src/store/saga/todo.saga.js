@@ -35,9 +35,9 @@ function* remove_todo_data(action) {
 function* modify_todo_data(action) {
   let params = action.payload
 
-  yield axios.put('/api/todos/isCompleted', params)
+  let { task } = yield axios.put('/api/todos/isCompleted', params)
 
-  yield put(modify_todo_success(params))
+  yield put(modify_todo_success(task))
 }
 
 // 实现 clear_todo_data
