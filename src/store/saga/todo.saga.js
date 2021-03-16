@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { takeEvery, put } from 'redux-saga/effects'
-import { load_todo_success, load_todo, add_todo, add_todo_success, remove_todo, remove_todo_success, modify_todo_success, modify_todo } from '../actions/todo.actions'
+import { clear_todo_completed, clear_todo_completed_success, load_todo_success, load_todo, add_todo, add_todo_success, remove_todo, remove_todo_success, modify_todo_success, modify_todo } from '../actions/todo.actions'
 
 // 实现 load_todo_data 获取数据同时传递新指令
 function* load_todo_data() {
@@ -40,11 +40,19 @@ function* modify_todo_data(action) {
   yield put(modify_todo_success(params))
 }
 
+// 实现 clear_todo_data
+function* clear_todo_data() {
+  // 利用 axios 删除后端数据
+  yield axios.delete('http://localhost:3005/api/todos/clearCompleted')
+  yield put(clear_todo_completed_success())
+}
+
 export default function* todoSaga() {
   yield takeEvery(load_todo, load_todo_data)
   yield takeEvery(add_todo, add_todo_data)
   yield takeEvery(remove_todo, remove_todo_data)
   yield takeEvery(modify_todo, modify_todo_data)
+  yield takeEvery(clear_todo_completed, clear_todo_data)
 }
 
 /**

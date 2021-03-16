@@ -19,6 +19,10 @@ export const modify_todo_success = createAction('modify_todo_success')
 // 05 筛选指令
 export const modify_todo_filter = createAction('modify_todo_filter')
 
+// 06 清除已完成任务
+export const clear_todo_completed = createAction('clear_todo_completed')
+export const clear_todo_completed_success = createAction('clear_todo_completed_success')
+
 
 /**
  *  01 可以发送请求获取数据    load_todo
