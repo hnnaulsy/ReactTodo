@@ -23,6 +23,9 @@ export const modify_todo_filter = createAction('modify_todo_filter')
 export const clear_todo_completed = createAction('clear_todo_completed')
 export const clear_todo_completed_success = createAction('clear_todo_completed_success')
 
+// 07 任务名称修改指令
+export const modify_todo_edit = createAction('modify_todo_edit')
+export const modify_todo_edit_success = createAction('modify_todo_edit_success')
 
 /**
  *  01 可以发送请求获取数据    load_todo

@@ -10,7 +10,6 @@ class Footer extends Component {
     }
   }
   render() {
-    console.log(this.props)
     // 此时我们就可以过虑出未选中的任务，然后统计它们的数据，做为具体的值使用
     let taskLen = this.props.todos.filter(todo => !todo.isCompleted).length
     return (

@@ -1,5 +1,5 @@
 import { handleActions as createReducer } from 'redux-actions'
-import { clear_todo_completed_success, load_todo_success, add_todo_success, remove_todo_success, modify_todo_success, modify_todo_filter } from '../actions/todo.actions'
+import { modify_todo_edit_success, clear_todo_completed_success, load_todo_success, add_todo_success, remove_todo_success, modify_todo_success, modify_todo_filter } from '../actions/todo.actions'
 
 const initialState = {
   todos: [],
@@ -41,6 +41,13 @@ export default createReducer({
       ...state,
       todos
     }
+  },
+  [modify_todo_edit_success]: (state, action) => {
+    // 利用id 找到需要被操作的任务项，然后设置 isEditing 状态，显示具体的样式
+    let todos = JSON.parse(JSON.stringify(state.todos))
+    let index = state.todos.findIndex(todo => todo.id === action.payload.id)
+    todos[index].isEditing = action.payload.isEditing
+    return { ...state, todos }
   }
 }, initialState)
 
