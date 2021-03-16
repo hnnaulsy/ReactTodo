@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as todoActions from '../store/actions/todo.actions'
+import { getIn } from 'immutable'
 
 class Main extends Component {
 
@@ -55,7 +56,7 @@ class Main extends Component {
 
 // 1 获取 store 当中数据
 const mapStateToProps = (state) => ({
-  todos: filterTodos(state.todoReducer.todos, state.todoReducer.filter)
+  todos: filterTodos(getIn(state.todoReducer, ['todos']), getIn(state.todoReducer, ['filter']))
 })
 
 // 2 处理 dispatch 函数

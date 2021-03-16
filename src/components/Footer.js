@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as todoActions from '../store/actions/todo.actions'
+import { getIn } from 'immutable'
 
 class Footer extends Component {
   clear_todo = () => {
@@ -36,8 +37,7 @@ class Footer extends Component {
 
 // 1 获取 store 当中数据
 const mapStateToProps = (state) => ({
-  todos: state.todoReducer.todos,
-  filter: state.todoReducer.filter
+  todos: getIn(state.todoReducer, ['todos'])
 })
 
 // 2 处理 dispatch 函数
