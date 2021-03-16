@@ -16,6 +16,9 @@ export const remove_todo_success = createAction('remove_todo_success')
 export const modify_todo = createAction('modify_todo')
 export const modify_todo_success = createAction('modify_todo_success')
 
+// 05 筛选指令
+export const modify_todo_filter = createAction('modify_todo_filter')
+
 
 /**
  *  01 可以发送请求获取数据    load_todo
