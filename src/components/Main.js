@@ -17,8 +17,14 @@ class Main extends Component {
     }
   }
 
+  modify_name(id, ev) {
+    // 1 切换状态 
+    this.props.modify_todo_edit({ id: id, isEditing: false })
+    // 2 修改数据
+    this.props.modify_todo_name({ id: id, taskName: ev.target.value })
+  }
+
   render() {
-    console.log(this.props)
     return (
       <section className="main">
         <input className="toggle-all" type="checkbox" />
@@ -35,7 +41,7 @@ class Main extends Component {
                     <label onDoubleClick={() => { this.props.modify_todo_edit({ id: item.id, isEditing: true }) }}>{item.taskName}</label>
                     <button className="destroy" onClick={this.removeTask.bind(this, item.id)}></button>
                   </div>
-                  <input defaultValue={item.taskName} className="edit" />
+                  <input defaultValue={item.taskName} className="edit" onBlur={this.modify_name.bind(this, item.id)} />
                 </li>
               )
             })

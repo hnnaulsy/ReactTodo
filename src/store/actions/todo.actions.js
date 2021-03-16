@@ -27,6 +27,10 @@ export const clear_todo_completed_success = createAction('clear_todo_completed_s
 export const modify_todo_edit = createAction('modify_todo_edit')
 export const modify_todo_edit_success = createAction('modify_todo_edit_success')
 
+// 08 任务名称确认指令
+export const modify_todo_name = createAction('modify_todo_name')
+export const modify_todo_name_success = createAction('modify_todo_name_success')
+
 /**
  *  01 可以发送请求获取数据    load_todo
  *  02 当异步操作完成之后还需要触发新的指令  load_todo_success
