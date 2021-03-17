@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^12.1.10",
     "immutable": "^4.0.0-rc.12",
     "props-type": "^1.0.1",
+    "qs": "^6.9.6",
     "radium": "^0.26.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
