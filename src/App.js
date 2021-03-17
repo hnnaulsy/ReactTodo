@@ -6,6 +6,7 @@ import NotFound from './components/notFound'
 import Detail from './components/detail'
 import auth from './auth'
 import { Redirect } from 'react-router-dom'
+import AuthRouteGuard from './guard'
 
 /**
  * 01 路由参数占位符
@@ -24,16 +25,9 @@ class App extends Component {
           <Switch>
             <Route path="/" component={Home} exact />
             <Route path="/home" component={Home} />
-            {/* <Route path="/list" component={List} /> */}
-            <Route path="/list" render={props => {
-              if (auth.isAuthorized()) {
-                // 进入路由
-                return <List {...props} />
-              } else {
-                // 重定向
-                return <Redirect to="/home" />
-              }
-            }} />
+
+            <AuthRouteGuard path="/list" component={List} />
+
             <Route path="/detail/:id" component={Detail} />
             <Route component={NotFound} />
           </Switch>
