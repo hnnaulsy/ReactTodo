@@ -4,11 +4,6 @@ import Home from './components/home'
 import List from './components/list'
 
 /**
- *  react-router-dom 
- * 
- * HashRouter： 开启路由 
- * Link：to 属性指定跳转的链接 
- * Route: path component 
  */
 class App extends Component {
   render() {
@@ -19,6 +14,7 @@ class App extends Component {
           <Link to="/list">列表页</Link>
         </div>
         <div>
+          <Route path="/" component={Home} exact />
           <Route path="/home" component={Home} />
           <Route path="/list" component={List} />
         </div>
