@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
 
 class List extends Component {
   render() {
     return (
-      <div>List 列表页内容</div>
+      <div>
+        <p><Link to="/detail/1">测试文章1</Link></p>
+        <p><Link to="/detail/2">测试文章2</Link></p>
+      </div>
     )
   }
 }
