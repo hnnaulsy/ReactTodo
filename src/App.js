@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { Link, Route } from 'react-router-dom'
+import { Link, Route, Switch } from 'react-router-dom'
 import Home from './components/home'
 import List from './components/list'
+import NotFound from './components/notFound'
 
 /**
  */
@@ -14,9 +15,13 @@ class App extends Component {
           <Link to="/list">列表页</Link>
         </div>
         <div>
-          <Route path="/" component={Home} exact />
-          <Route path="/home" component={Home} />
-          <Route path="/list" component={List} />
+          <Switch>
+            <Route path="/" component={Home} exact />
+            <Route path="/home" component={Home} />
+            <Route path="/list" component={List} exact />
+            {/* <Route path="/list" component={List} /> */}
+            <Route component={NotFound} />
+          </Switch>
         </div>
       </div>
     )
