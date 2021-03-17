@@ -1,17 +1,15 @@
 import React, { Component } from 'react'
 import { Link, Route, Switch } from 'react-router-dom'
-import Home from './components/home'
-import List from './components/list'
-import NotFound from './components/notFound'
-import Detail from './components/detail'
-import auth from './auth'
-import { Redirect } from 'react-router-dom'
 import AuthRouteGuard from './guard'
+import loadComponent from '@loadable/component'
+
+const Home = loadComponent(() => import('./components/home'))
+const List = loadComponent(() => import('./components/list'))
+const NotFound = loadComponent(() => import('./components/notFound'))
+const Detail = loadComponent(() => import('./components/detail'))
 
 /**
- * 01 路由参数占位符
- * 02 触发操作的时候传递具体的参数 
- * 03 在具体的组件当中使用传递的参数
+ * @loadable/component 
  */
 class App extends Component {
   render() {
@@ -25,9 +23,7 @@ class App extends Component {
           <Switch>
             <Route path="/" component={Home} exact />
             <Route path="/home" component={Home} />
-
             <AuthRouteGuard path="/list" component={List} />
-
             <Route path="/detail/:id" component={Detail} />
             <Route component={NotFound} />
           </Switch>
