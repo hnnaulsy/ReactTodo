@@ -1,21 +1,22 @@
 import React, { Component } from 'react'
 import qs from 'qs'
-import { Redirect } from 'react-router-dom'
-
+import auth from '../auth'
 
 class Home extends Component {
-  render(props) {
-    // console.log(this.props.location.search)
-    // console.log(qs.parse(this.props.location.search, { ignoreQueryPrefix: true }))
 
-    const isLogin = false
+  login = () => {
+    // 执行登录
+    auth.login()
+    alert('登录成功')
+  }
 
-    if (!isLogin) {
-      return <Redirect to="/list" />
-    }
+  render() {
 
     return (
-      <div>Home 首页内容  {qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).title}</div>
+      <div>
+        <p>Home 首页内容  {qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).title}</p>
+        <button onClick={this.login}>登录</button>
+      </div>
     )
   }
 }
