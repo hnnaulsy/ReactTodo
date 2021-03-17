@@ -16,13 +16,13 @@ class App extends Component {
       <div>
         <div>
           <Link to="/home">首页</Link>---
-          <Link to="/lister">列表页</Link>
+          <Link to="/list">列表页</Link>
         </div>
         <div>
           <Switch>
             <Route path="/" component={Home} exact />
             <Route path="/home" component={Home} />
-            <Route path="/lister" component={List} />
+            <Route path="/list" component={List} />
             <Route path="/detail/:id" component={Detail} />
             <Route component={NotFound} />
           </Switch>
