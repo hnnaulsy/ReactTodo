@@ -2,13 +2,29 @@ import React, { useState, useEffect } from 'react'
 
 
 /**
- *  useEffect 
- *   挂载  更新  卸载
  */
 
 function Header() {
   const [strState, setStrState] = useState('拉勾教育')
   const [numState, setNumState] = useState(10)
+
+  useEffect(() => {
+    // 事件监听添加操作
+    console.log('事件监听添加操作')
+    return () => {
+      console.log('移除事件监听')
+    }
+  })
+
+  useEffect(() => {
+    // 发送网络请求获取数据
+    console.log('发送网络请求获取数据')
+  })
+
+  useEffect(() => {
+    // 判断是否登录
+    console.log('判断是否登录')
+  })
 
   useEffect(() => {
     console.log('挂载与更新操作完成了')
