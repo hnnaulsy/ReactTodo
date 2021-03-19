@@ -1,49 +1,58 @@
-import React, { useState, useReducer } from 'react'
-
-function reducer(state, action) {
-  switch (action.type) {
-    case 'add':
-      return { ...state, num: state.num + 1 }
-    case 'sub':
-      return { ...state, num: state.num - 1 }
-    default:
-      return { ...state }
-  }
-}
+import React, { useState, memo, useCallback, useContext } from 'react'
 
 // Home 
-function Home() {
-  const [state, dispatch] = useReducer(reducer, { num: 0 })
-
+function Home(props) {
+  console.log('Home组件被渲染了')
   return (
     <div>
-      <p>数据： {state.num}</p>
-      <button onClick={() => { dispatch({ type: "add" }) }}>+ 1</button>
-      <button onClick={() => { dispatch({ type: "sub" }) }}> - 1</button>
+      <p>Home组件</p>
+      <button onClick={() => { props.handler() }}>减小</button>
     </div>
   )
 }
 
-// About 
-function About() {
-  const [state, dispatch] = useReducer(reducer, { num: 10 })
-
+// About
+function About(props) {
+  console.log('About组件被渲染了')
   return (
     <div>
-      <p>数据： {state.num}</p>
-      <button onClick={() => { dispatch({ type: "add" }) }}>+ 1</button>
-      <button onClick={() => { dispatch({ type: "sub" }) }}> - 1</button>
+      <p>About组件</p>
+      <button onClick={() => { props.handler() }}>增加</button>
     </div>
   )
-
 }
 
+const MemoHome = memo(Home)
+const MemoAbout = memo(About)
 
 function App() {
+  console.log('App组件被渲染了')
+  const [numState, setNumState] = useState(10)
+  const [ageState, setAgeState] = useState(20)
+
+  function increment() {
+    setNumState(numState + 2)
+  }
+
+  // function decrement() {
+  //   setAgeState(ageState - 4)
+  // }
+
+  // 
+  const decrement = useCallback(() => {
+    setAgeState(ageState - 4)
+  }, [ageState])
+
   return (
     <div>
-      <Home />
-      <About />
+      <p>num数据： {numState}</p>
+      <p>age数据： {ageState}</p>
+
+      <hr />
+      <MemoHome handler={decrement} />
+
+      <hr />
+      <MemoAbout handler={increment} />
     </div>
   )
 }
