@@ -2,33 +2,53 @@ import React, { useState } from 'react'
 
 
 /**
- * 1 什么是 HOOK 
- *  它就是一个特殊的函数 
- *  它就可以让函数式组件也具有类组件的特性
- * 
- * 2 为什么需要 HOOK 
- *  1 学习成本（相对）
- *  2 数据共享
- *  3 多个业务逻辑代码有可能会存在于同一个生命周期函数中
- * 
- * 3 useState 
- *  它是一个可以在函数组件中保存状态的 HOOK 函数  
- *  参数：保存状态的初始值 
- *  返回值 
- *    一个数组
- *    第一个元素就是当前保存的状态
- *    第二个元素就是修改当前保存状态的方法
+ * 01 在函数组件中可以多次使用同一个 HOOK 函数
+ * 02 简单类型 复杂 
+ * 03 set操作也是异步的， 不能直接修改 state 的原始值  
  */
 function App() {
+  const [ageState, setAgeState] = useState(10)
+  const [nameState, setNameState] = useState('syy')
 
-  const arr = useState(0)
-  const [state, setState] = arr
-  console.log(state, setState)
+  const [personState, setPersonState] = useState({ "name": "zce", "age": 40 })
+  const [listState, setListState] = useState([
+    { "name": "zoe", "age": 18 },
+    { "name": "zce", "age": 40 },
+    { "name": "syy", "age": 20 },
+  ])
+
+  // 定义修改第一个 age 值的方法
+  function incrementAge() {
+    // setAgeState(ageState + 10)
+    // setAgeState(ageState + 10)
+    // setAgeState(ageState + 10)
+    setAgeState((pre) => pre + 10)
+    setAgeState((pre) => pre + 10)
+    setAgeState((pre) => pre + 10)
+  }
+
+  // 定义修改第二个人物状态 name 的操作
+  function changeName() {
+    // personState.name = '拉勾教育'
+    setPersonState({ ...personState, name: '拉勾教育' })
+  }
+
   return (
     <div>
-      数据： {state}
-      <button onClick={() => { setState(state + 1) }}>+1</button>
-      <button onClick={() => { setState(state - 1) }}>-1</button>
+      数据： {ageState}---{nameState}
+      <button onClick={() => { incrementAge() }}>+1</button>
+      <button onClick={() => { setAgeState(ageState - 1) }}>-1</button>
+      <hr />
+      数据： {personState.name}---{personState.age}
+      <button onClick={() => { changeName() }}>+1</button>
+      <hr />
+      {
+        listState.map(item => {
+          return (
+            <p>{item.name}---{item.age}</p>
+          )
+        })
+      }
     </div>
   )
 }
