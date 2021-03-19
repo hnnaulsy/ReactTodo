@@ -1,51 +1,49 @@
-import React, { createContext, useContext } from 'react'
+import React, { useState, useReducer } from 'react'
 
-const UserContext = createContext({})
-const AreaContext = createContext({})
+function reducer(state, action) {
+  switch (action.type) {
+    case 'add':
+      return { ...state, num: state.num + 1 }
+    case 'sub':
+      return { ...state, num: state.num - 1 }
+    default:
+      return { ...state }
+  }
+}
 
-// 定义 Header 组件
-function Header() {
-  const userInfo = useContext(UserContext)
-  const areaInfo = useContext(AreaContext)
+// Home 
+function Home() {
+  const [state, dispatch] = useReducer(reducer, { num: 0 })
+
   return (
-    // <UserContext.Consumer>
-    //   {
-    //     value1 => {
-    //       return (
-    //         <AreaContext.Consumer>
-    //           {
-    //             value2 => {
-    //               return (
-    //                 <div>
-    //                   <p>{value1.name}</p>
-    //                   <p>{value1.age}</p>
-    //                   <p>{value2.width}</p>
-    //                 </div>
-    //               )
-    //             }
-    //           }
-    //         </AreaContext.Consumer>
-    //       )
-    //     }
-    //   }
-    // </UserContext.Consumer>
-
     <div>
-      <p>{userInfo.name}</p>
-      <p>{userInfo.age}</p>
-      <p>{areaInfo.width}</p>
+      <p>数据： {state.num}</p>
+      <button onClick={() => { dispatch({ type: "add" }) }}>+ 1</button>
+      <button onClick={() => { dispatch({ type: "sub" }) }}> - 1</button>
     </div>
   )
 }
 
+// About 
+function About() {
+  const [state, dispatch] = useReducer(reducer, { num: 10 })
+
+  return (
+    <div>
+      <p>数据： {state.num}</p>
+      <button onClick={() => { dispatch({ type: "add" }) }}>+ 1</button>
+      <button onClick={() => { dispatch({ type: "sub" }) }}> - 1</button>
+    </div>
+  )
+
+}
+
+
 function App() {
   return (
     <div>
-      <UserContext.Provider value={{ "name": "syy", "age": 18 }}>
-        <AreaContext.Provider value={{ "width": 200 }}>
-          <Header />
-        </AreaContext.Provider>
-      </UserContext.Provider>
+      <Home />
+      <About />
     </div>
   )
 }
