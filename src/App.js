@@ -1,35 +1,41 @@
-import React, { useState, createRef, useRef, PureComponent, forwardRef, useImperativeHandle } from 'react'
+import React, { useState, useRef, useEffect, useLayoutEffect } from 'react'
+import './App.css'
 
-function Home(props, oHome) {
-  const oInput = useRef()
-  useImperativeHandle(oHome, () => {
-    return {
-      setValue: () => {
-        oInput.current.value = "Home自己实现的setValue方法"
-      }
+function Home() {
+
+  const oP = useRef()
+
+  // useEffect(() => {
+  //   oP.current.style.left = '0px'
+  //   oP.current.style.left = '600px'
+  //   console.log('挂载|更新, useEffect')
+  //   return () => {
+  //     console.log('卸载, useEffect')
+  //   }
+  // })
+
+  useLayoutEffect(() => {
+    oP.current.style.left = '0px'
+    oP.current.style.left = '600px'
+    console.log('挂载|更新, , useLayoutEffect')
+    return () => {
+      console.log('卸载, useLayoutEffect')
     }
   })
   return (
     <div>
-      <h2>Home组件</h2>
-      <input ref={oInput}></input>
+      home组件
+      <p ref={oP}>Home组件中的 P元素</p>
     </div>
   )
 }
 
-const ForwardHome = forwardRef(Home)
-
 function App() {
-  const oHome = useRef()
-
-  function btnClick() {
-    console.log(oHome)
-    oHome.current.setValue()
-  }
+  const [isShow, setIsShow] = useState(true)
   return (
     <div>
-      <ForwardHome ref={oHome} />
-      <button onClick={() => { btnClick() }}>操作input</button>
+      {isShow && <Home />}
+      <button onClick={() => { setIsShow(!isShow) }}> 切换</button>
     </div>
   )
 }
