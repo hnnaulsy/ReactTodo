@@ -1,31 +1,28 @@
-import React, { useState, useRef, useEffect, useLayoutEffect } from 'react'
-import './App.css'
+import React, { useState, useEffect } from 'react'
 
-function Home() {
-
-  const oP = useRef()
-
-  // useEffect(() => {
-  //   oP.current.style.left = '0px'
-  //   oP.current.style.left = '600px'
-  //   console.log('挂载|更新, useEffect')
-  //   return () => {
-  //     console.log('卸载, useEffect')
-  //   }
-  // })
-
-  useLayoutEffect(() => {
-    oP.current.style.left = '0px'
-    oP.current.style.left = '600px'
-    console.log('挂载|更新, , useLayoutEffect')
+function useAddEventListener(cName) {
+  useEffect(() => {
+    console.log(cName, '组件挂载|更新添加事件监听')
     return () => {
-      console.log('卸载, useLayoutEffect')
+      console.log(cName, '卸载时取消事件监听')
     }
   })
+}
+
+function Home() {
+  useAddEventListener('Home---')
   return (
     <div>
-      home组件
-      <p ref={oP}>Home组件中的 P元素</p>
+      Home组件
+    </div>
+  )
+}
+
+function About() {
+  useAddEventListener('About---')
+  return (
+    <div>
+      About组件
     </div>
   )
 }
@@ -35,7 +32,8 @@ function App() {
   return (
     <div>
       {isShow && <Home />}
-      <button onClick={() => { setIsShow(!isShow) }}> 切换</button>
+      {isShow && <About />}
+      <button onClick={() => { setIsShow(!isShow) }}>切换</button>
     </div>
   )
 }
