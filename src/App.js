@@ -1,24 +1,35 @@
-import { getElementError } from '@testing-library/dom'
-import React, { useState, createRef, useRef, PureComponent } from 'react'
+import React, { useState, createRef, useRef, PureComponent, forwardRef, useImperativeHandle } from 'react'
 
-/**
- * 01 useRef 可以用于获取元素 
- * 02 useRef 还可以保存数据 
- * 03 useRef 保存的数据除非我们手动修改，否则的话它是不会改变的
- */
+function Home(props, oHome) {
+  const oInput = useRef()
+  useImperativeHandle(oHome, () => {
+    return {
+      setValue: () => {
+        oInput.current.value = "Home自己实现的setValue方法"
+      }
+    }
+  })
+  return (
+    <div>
+      <h2>Home组件</h2>
+      <input ref={oInput}></input>
+    </div>
+  )
+}
+
+const ForwardHome = forwardRef(Home)
 
 function App() {
-  const [numState, setNumState] = useState(100)
-  const obj = useRef(numState)
+  const oHome = useRef()
 
   function btnClick() {
-    console.log(obj.current)
+    console.log(oHome)
+    oHome.current.setValue()
   }
   return (
     <div>
-      <p>obj当中的 current: {obj.current}</p>
-      <p>{numState}</p>
-      <button onClick={() => { setNumState(numState + 1) }}>操作</button>
+      <ForwardHome ref={oHome} />
+      <button onClick={() => { btnClick() }}>操作input</button>
     </div>
   )
 }
