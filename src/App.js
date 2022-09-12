@@ -1,41 +1,18 @@
-import React, { useState, useEffect } from 'react'
+import React, { Component } from "react";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import Main from "./components/Main";
 
-function useAddEventListener(cName) {
-  useEffect(() => {
-    console.log(cName, '组件挂载|更新添加事件监听')
-    return () => {
-      console.log(cName, '卸载时取消事件监听')
-    }
-  })
+class App extends Component {
+  render() {
+    return (
+      <div className="todoapp">
+        <Header/>
+        <Main/>
+        <Footer/>
+      </div>
+    )
+  }
 }
 
-function Home() {
-  useAddEventListener('Home---')
-  return (
-    <div>
-      Home组件
-    </div>
-  )
-}
-
-function About() {
-  useAddEventListener('About---')
-  return (
-    <div>
-      About组件
-    </div>
-  )
-}
-
-function App() {
-  const [isShow, setIsShow] = useState(true)
-  return (
-    <div>
-      {isShow && <Home />}
-      {isShow && <About />}
-      <button onClick={() => { setIsShow(!isShow) }}>切换</button>
-    </div>
-  )
-}
 export default App
-
