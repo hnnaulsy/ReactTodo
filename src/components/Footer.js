@@ -4,6 +4,12 @@ import { bindActionCreators } from "redux";
 import * as todoActions from '../store/actions/todo.actions'
 
 class Footer extends Component {
+	clear_todo = ()=>{
+		if(window.confirm('是否删除已完成任务')){
+			this.props.clear_todo_completed()
+		}
+	}
+
   render() {
 		let taskLen = this.props.todos.filter(todo=>!todo.isCompleted).length
     return (
@@ -22,7 +28,7 @@ class Footer extends Component {
 						<span onClick={()=>{this.props.modify_todo_filter('completed')}}>Completed</span>
 					</li>
 				</ul>
-				<button className="clear-completed">Clear completed</button>
+				<button className="clear-completed" onClick={this.clear_todo}>Clear completed</button>
 			</footer>
     )
   }
