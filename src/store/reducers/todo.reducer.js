@@ -1,5 +1,5 @@
 import {handleActions as  createReducer} from 'redux-actions'
-import { load_todo_success,add_todo_success,remove_todo_success,modify_todo_success,modify_todo_filter,clear_todo_completed_success } from '../actions/todo.actions'
+import { load_todo_success,add_todo_success,remove_todo_success,modify_todo_success,modify_todo_filter,clear_todo_completed_success,modify_todo_edit_success } from '../actions/todo.actions'
 
 const initalState = {
   todos: [],
@@ -36,6 +36,12 @@ export default createReducer({
       ...state,
       todos
     }
+  },
+  [modify_todo_edit_success]: (state,action) => {
+    let todos = JSON.parse(JSON.stringify(state.todos))
+    let index = state.todos.findIndex(todo=>todo.id===action.payload.id)
+    todos[index].isEditing = action.payload.isEditing
+    return {...state,todos}
   }
   
 },initalState)

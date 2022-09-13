@@ -17,16 +17,21 @@ class Main extends Component {
 			<section className="main">
 				<input className="toggle-all" type="checkbox" />
 				<ul className="todo-list">
-          { this.props.todos.map(item=>(
-            <li key={item.id} className={item.isCompleted ? 'completed':''}>
-              <div className="view">
-                <input className="toggle" type="checkbox" defaultChecked={item.isCompleted} onChange={(e)=>{this.props.modify_todo({id: item.id,isCompleted:e.target.checked})}}/>
-                <label>{item.taskName}</label>
-                <button className="destroy" onClick={this.removeTask.bind(this,item.id)}></button>
-              </div>
-              <input className="edit"/>
-					</li>
-          )) }
+          { this.props.todos.map(item=>{
+            let classes = []
+            if(item.isCompleted) classes.push('completed')
+            if(item.isEditing) classes.push('editing')
+            return (
+              <li key={item.id} className={classes.join('')}>
+                <div className="view">
+                  <input className="toggle" type="checkbox" defaultChecked={item.isCompleted} onChange={(e)=>{this.props.modify_todo({id: item.id,isCompleted:e.target.checked})}}/>
+                  <label onDoubleClick={()=>{this.props.modify_todo_edit({id:item.id,isEditing: true })}}>{item.taskName}</label>
+                  <button className="destroy" onClick={this.removeTask.bind(this,item.id)}></button>
+                </div>
+                <input defaultValue={item.taskName} className="edit"/>
+            </li>
+            )
+          }) }
 				</ul>
 			</section>
     )
