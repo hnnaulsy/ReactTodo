@@ -34,11 +34,22 @@ class Main extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  todos: state.todoReducer.todos
+  todos: filterTodos(state.todoReducer.todos,state.todoReducer.filter)
 })
 
 const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators(todoActions,dispatch)
 })
+
+function filterTodos(todos,filter) {
+  switch(filter) {
+    case 'all':
+      return todos
+    case 'active':
+      return todos.filter(todo=>!todo.isCompleted)
+    case 'completed':
+      return todos.filter(todo=>todo.isCompleted)
+  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main)

@@ -11,3 +11,6 @@ export const remove_todo_success = createAction('remove_todo_success')
 
 export const modify_todo = createAction('modify_todo')
 export const modify_todo_success = createAction('modify_todo_success')
+
+export const modify_todo_filter = createAction('modify_todo_filter')
+
