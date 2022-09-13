@@ -1,12 +1,19 @@
 import axios from 'axios'
-import {takeEvery,put} from 'redux-saga/effects'
-import { load_todo,load_todo_success } from '../actions/todo.actions'
+import {takeEvery,put, take} from 'redux-saga/effects'
+import { load_todo,load_todo_success,add_todo,add_todo_success } from '../actions/todo.actions'
 
 function* loade_todo_data(){
   let todoData = yield axios.get('http://localhost:3005/api/todos').then(res=>res.data)
   yield put(load_todo_success(todoData))
 }
 
+function* add_todo_data(action){
+  let taskInfo = yield axios.post('http://localhost:3005/api/todos',{taskName: action.payload}).then(res=>res.data)
+  
+  yield put(add_todo_success(taskInfo.task))
+}
+
 export default function* todoSaga(){
   yield takeEvery(load_todo,loade_todo_data)
+  yield takeEvery(add_todo,add_todo_data)
 }
