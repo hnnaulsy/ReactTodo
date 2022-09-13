@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {takeEvery,put, take} from 'redux-saga/effects'
-import { load_todo,load_todo_success,add_todo,add_todo_success,remove_todo,remove_todo_success,modify_todo,modify_todo_success,clear_todo_completed,clear_todo_completed_success,modify_todo_edit,modify_todo_edit_success } from '../actions/todo.actions'
+import { load_todo,load_todo_success,add_todo,add_todo_success,remove_todo,remove_todo_success,modify_todo,modify_todo_success,clear_todo_completed,clear_todo_completed_success,modify_todo_edit,modify_todo_edit_success,modify_todo_name,modify_todo_name_success } from '../actions/todo.actions'
 
 function* loade_todo_data(){
   let todoData = yield axios.get('http://localhost:3005/api/todos').then(res=>res.data)
@@ -37,6 +37,11 @@ function* modify_todo_edit_data(action) {
   yield put(modify_todo_edit_success(action.payload))
 }
 
+function* modify_todo_name_data(action) {
+  yield axios.put('http://localhost:3005/api/todos/',action.payload)
+  yield put(modify_todo_name_success(action.payload))
+}
+
 export default function* todoSaga(){
   yield takeEvery(load_todo,loade_todo_data)
   yield takeEvery(add_todo,add_todo_data)
@@ -44,4 +49,5 @@ export default function* todoSaga(){
   yield takeEvery(modify_todo,modify_todo_data)
   yield takeEvery(clear_todo_completed,clear_todo_data)
   yield takeEvery(modify_todo_edit,modify_todo_edit_data)
+  yield takeEvery(modify_todo_name,modify_todo_name_data)
 }

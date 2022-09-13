@@ -12,6 +12,11 @@ class Main extends Component {
       this.props.remove_todo(id)
     }
   }
+
+  modify_name(id,ev){
+    this.props.modify_todo_edit({id:id,isEditing:false})
+    this.props.modify_todo_name({id:id,taskName:ev.target.value})
+  }
   render() {
     return (
 			<section className="main">
@@ -28,7 +33,7 @@ class Main extends Component {
                   <label onDoubleClick={()=>{this.props.modify_todo_edit({id:item.id,isEditing: true })}}>{item.taskName}</label>
                   <button className="destroy" onClick={this.removeTask.bind(this,item.id)}></button>
                 </div>
-                <input defaultValue={item.taskName} className="edit"/>
+                <input defaultValue={item.taskName} className="edit" onBlur={this.modify_name.bind(this,item.id)}/>
             </li>
             )
           }) }
