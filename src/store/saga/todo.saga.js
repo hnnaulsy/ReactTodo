@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {takeEvery,put, take} from 'redux-saga/effects'
-import { load_todo,load_todo_success,add_todo,add_todo_success,remove_todo,remove_todo_success } from '../actions/todo.actions'
+import { load_todo,load_todo_success,add_todo,add_todo_success,remove_todo,remove_todo_success,modify_todo,modify_todo_success } from '../actions/todo.actions'
 
 function* loade_todo_data(){
   let todoData = yield axios.get('http://localhost:3005/api/todos').then(res=>res.data)
@@ -21,8 +21,15 @@ function* remove_todo_data(action) {
   yield put(remove_todo_success(res.tasks.id))
 }
 
+function* modify_todo_data(action) {
+  let params = action.payload
+  yield axios.put('http://localhost:3005/api/todos/isCompleted',params).then(res=>res.data)
+  yield put(modify_todo_success(params))
+}
+
 export default function* todoSaga(){
   yield takeEvery(load_todo,loade_todo_data)
   yield takeEvery(add_todo,add_todo_data)
   yield takeEvery(remove_todo,remove_todo_data)
+  yield takeEvery(modify_todo,modify_todo_data)
 }
