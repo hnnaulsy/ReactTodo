@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as todoActions from '../store/actions/todo.actions'
+import { getIn } from "immutable";
 
 class Main extends Component {
   componentDidMount() {
@@ -44,7 +45,7 @@ class Main extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  todos: filterTodos(state.todoReducer.todos,state.todoReducer.filter)
+  todos: filterTodos(getIn(state.todoReducer,['todos']),getIn(state.todoReducer,['filter']))
 })
 
 const mapDispatchToProps = (dispatch) => ({
